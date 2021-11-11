@@ -1,0 +1,31 @@
+{
+  "id": "42f7c2ef-0fb8-4a7a-95e2-e02d2a11afdd",
+  "name": "Demo XML",
+  "publisher": "Kauffmann IT Services",
+  "version": "1.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "19.0.0.0",
+  "application": "19.0.0.0",
+  "idRanges": [
+    {
+      "from": 50000,
+      "to": 50100
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "8.0",
+  "target": "OnPrem",
+  "features": ["NoImplicitWith"]
+}

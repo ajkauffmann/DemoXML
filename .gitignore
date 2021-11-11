@@ -1,0 +1,8 @@
+*.app
+*.g.xlf
+*.zip
+launch.json
+rad.json
+**/.alcache/
+**/.alpackages/
+**/.snapshots/
