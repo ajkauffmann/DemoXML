@@ -1,7 +1,7 @@
 page 50004 XmlEditorPTE
 {
     PageType = Card;
-    Caption = 'XML Editor 🐱‍💻';
+    Caption = 'XML Editor';
     UsageCategory = Tasks;
     ApplicationArea = All;
 
@@ -24,15 +24,12 @@ page 50004 XmlEditorPTE
                     end;
 
                     trigger GetValueRequested(value: Text)
-                    var
-                        Selection: Integer;
                     begin
                         Editor1Value := value;
-                        Selection := StrMenu('DotNet, AL');
-                        case Selection of
-                            1:
+                        case DemoType of
+                            'DotNet':
                                 ReadBooksDotNet(value);
-                            2:
+                            'AL':
                                 ReadBooksAL(value);
                         end
                     end;
@@ -103,9 +100,9 @@ page 50004 XmlEditorPTE
                     CurrPage.Editor1.SetValue(XmlDataLibrary.GetValidXml());
                 end;
             }
-            action(DemoAction)
+            action(DemoActionDotNet)
             {
-                Caption = 'Demo';
+                Caption = 'Demo DotNet';
                 ApplicationArea = All;
                 Promoted = true;
                 PromotedOnly = true;
@@ -114,6 +111,22 @@ page 50004 XmlEditorPTE
                 trigger OnAction()
                 begin
                     Editor1Value := '';
+                    DemoType := 'DotNet';
+                    CurrPage.Editor1.GetValue();
+                end;
+            }
+            action(DemoActionAL)
+            {
+                Caption = 'Demo AL';
+                ApplicationArea = All;
+                Promoted = true;
+                PromotedOnly = true;
+                PromotedCategory = Process;
+
+                trigger OnAction()
+                begin
+                    Editor1Value := '';
+                    DemoType := 'AL';
                     CurrPage.Editor1.GetValue();
                 end;
             }
@@ -144,6 +157,7 @@ page 50004 XmlEditorPTE
         CurrentTheme: Enum AceEditorThemePTE;
         CurrentMode: Enum AceEditorModePTE;
         Editor1Value, Editor2Value : Text;
+        DemoType: Text;
 
     trigger OnAfterGetRecord()
     begin
@@ -294,7 +308,8 @@ page 50004 XmlEditorPTE
         DemoDotNetXml: Codeunit DemoDotNetXmlPTE;
     begin
         DemoDotNetXml.ReadBooks(xml, Book);
-        Page.Run(Page::BooksPTE, Book);
+        if not Book.IsEmpty then
+            Page.Run(Page::BooksPTE, Book);
     end;
 
     local procedure ReadBooksAL(xml: Text)
@@ -303,7 +318,8 @@ page 50004 XmlEditorPTE
         DemoALXml: Codeunit DemoALXmlPTE;
     begin
         DemoALXml.ReadBooks(xml, Book);
-        Page.Run(Page::BooksPTE, Book);
+        if not Book.IsEmpty then
+            Page.Run(Page::BooksPTE, Book);
     end;
 
     local procedure CreateXml()

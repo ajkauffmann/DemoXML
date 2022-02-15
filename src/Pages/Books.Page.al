@@ -12,10 +12,11 @@ page 50000 BooksPTE
         {
             repeater(Records)
             {
-                field(Number; Rec.Number) { }
-                field(Title; Rec.Title) { }
-                field(Author; Rec.Author) { }
-                field(Price; Rec.Price) { }
+                field(Number; Rec.Number) { ApplicationArea = All; }
+                field(Title; Rec.Title) { ApplicationArea = All; }
+                field(Author; Rec.Author) { ApplicationArea = All; }
+                field(ISBN; Rec.ISBN) { ApplicationArea = All; }
+                field(Price; Rec.Price) { ApplicationArea = All; }
             }
         }
     }

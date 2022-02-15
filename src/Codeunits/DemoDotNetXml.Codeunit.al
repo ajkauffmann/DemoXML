@@ -10,7 +10,6 @@ codeunit 50000 DemoDotNetXmlPTE
         Element: DotNet XmlElement;
         Node: DotNet XmlNode;
         i: Integer;
-
     begin
         Book.DeleteAll();
 
@@ -24,6 +23,7 @@ codeunit 50000 DemoDotNetXmlPTE
             Book.Init();
             Book.Number := i + 1;
 
+            Book.ISBN := Node.Attributes.GetNamedItem('ISBN').Value;
             Element := Node.SelectSingleNode('title');
             Book.Title := Element.InnerText;
 

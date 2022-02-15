@@ -22,7 +22,7 @@ function SetMode(mode) {
 }
 
 function SetValue(value) {
-    editor.setValue(value);
+    editor.setValue(value, -1);
     beautify.beautify(editor.session);
 }
 
@@ -37,7 +37,7 @@ function SetReadOnly(readOnly) {
 function PrettifyXml() {
     var xml = editor.getValue();
     xml = prettifyXml(xml);
-    editor.setValue(xml);
+    editor.setValue(xml, -1);
 }
 
 var prettifyXml = function(sourceXml) {

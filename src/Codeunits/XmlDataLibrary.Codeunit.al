@@ -49,8 +49,8 @@ codeunit 50002 XmlDataLibraryPTE
         StringBuilder: TextBuilder;
     begin
         StringBuilder.Append('<?xml version="1.0" encoding="utf-8" ?>');
-        StringBuilder.Append('<bookstore xmlns="http://www.contoso.com/books">');
-        // StringBuilder.Append('<bookstore>');
+        StringBuilder.Append('<bookstore>');
+        // StringBuilder.Append('<bookstore xmlns="http://www.contoso.com/books">');
         StringBuilder.Append('    <book genre="autobiography" publicationdate="1981-03-22" ISBN="1-861003-11-0">');
         StringBuilder.Append('        <title>The Autobiography of Benjamin Franklin</title>');
         StringBuilder.Append('        <author>');

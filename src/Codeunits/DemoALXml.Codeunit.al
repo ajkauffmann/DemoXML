@@ -22,38 +22,44 @@ codeunit 50001 DemoALXmlPTE
         if not XmlDoc.GetRoot(RootElement) then
             Error('Xml is empty');
 
-        XmlNamespaceMgr := GetNamespaceManager(XmlDoc);
-
-        // if RootElement.SelectNodes('bookx', NodeList) then begin
+        // if RootElement.SelectNodes('book', NodeList) then begin
         //     Message('Count: %1', NodeList.Count);
+        //     exit;
         // end;
 
+        // XmlNamespaceMgr := GetNamespaceManager(XmlDoc);
         foreach Node in RootElement.GetChildNodes() do begin
-            if Node.IsXmlElement then begin
+            // Message(GetNodeType(Node));
+            // if Node.IsXmlElement then begin
 
-                i += 1;
+            i += 1;
 
-                Book.Init();
-                Book.Number := i;
+            Book.Init();
+            Book.Number := i;
 
-                // ReadBook(Node, Book);
-                ReadBookWithNamespace(Node, XmlNamespaceMgr, Book);
+            ReadBook(Node, Book);
+            // ReadBookWithNamespace(Node, XmlNamespaceMgr, Book);
 
-                Book.Insert();
-            end;
+            // Book.Insert();
+            // end;
         end;
     end;
 
     local procedure ReadBook(BookNode: XmlNode; var Book: Record BookPTE)
     var
         Node: XmlNode;
+        Attribute: XmlAttribute;
     begin
+        if BookNode.AsXmlElement().Attributes().Get('ISBN', Attribute) then
+            Book.ISBN := Attribute.Value
+        else
+            Book.ISBN := 'X-XXXXXX-XX-X';
+
         BookNode.SelectSingleNode('title', Node);
         Book.Title := Node.AsXmlElement().InnerText;
 
         if BookNode.SelectSingleNode('author/first-name', Node) then begin
             Book.Author := Node.AsXmlElement().InnerText;
-
             BookNode.SelectSingleNode('author/last-name', Node);
             Book.Author += ' ' + Node.AsXmlElement().InnerText;
         end else begin
@@ -74,7 +80,13 @@ codeunit 50001 DemoALXmlPTE
     local procedure ReadBookWithNamespace(BookNode: XmlNode; XmlNamespaceMgr: XmlNamespaceManager; var Book: Record BookPTE)
     var
         Node: XmlNode;
+        Attribute: XmlAttribute;
     begin
+        if BookNode.AsXmlElement().Attributes().Get('ISBN', Attribute) then
+            Book.ISBN := Attribute.Value
+        else
+            Book.ISBN := 'X-XXXXXX-XX-X';
+
         BookNode.SelectSingleNode('ddc:title', XmlNamespaceMgr, Node);
         Book.Title := Node.AsXmlElement().InnerText;
 
@@ -90,5 +102,29 @@ codeunit 50001 DemoALXmlPTE
 
         BookNode.SelectSingleNode('ddc:price', XmlNamespaceMgr, Node);
         Evaluate(Book.Price, Node.AsXmlElement().InnerText);
+    end;
+
+    local procedure GetNodeType(Node: XmlNode) NodeType: Text;
+    begin
+        case true of
+            Node.IsXmlAttribute:
+                NodeType := 'Attribute';
+            Node.IsXmlCData:
+                NodeType := 'CData';
+            Node.IsXmlComment:
+                NodeType := 'Comment';
+            Node.IsXmlDeclaration:
+                NodeType := 'Declaration';
+            Node.IsXmlDocument:
+                NodeType := 'Document';
+            Node.IsXmlDocumentType:
+                NodeType := 'DocumentType';
+            Node.IsXmlElement:
+                NodeType := 'Element';
+            Node.IsXmlProcessingInstruction:
+                NodeType := 'ProcessingInstruction';
+            Node.IsXmlText:
+                NodeType := 'Text';
+        end;
     end;
 }
