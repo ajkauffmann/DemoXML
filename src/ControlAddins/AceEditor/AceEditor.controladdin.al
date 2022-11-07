@@ -2,7 +2,7 @@ controladdin AceEditorPTE
 {
     Scripts = 'src/ControlAddins/AceEditor/startup.js',
               'src/ControlAddins/AceEditor/script.js',
-              'https://pagecdn.io/lib/ace/1.4.12/ace.min.js';
+              'https://cdnjs.cloudflare.com/ajax/libs/ace/1.12.5/ace.min.js';
 
     StyleSheets = 'src/ControlAddins/AceEditor/stylesheet.css';
 
